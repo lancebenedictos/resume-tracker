@@ -18,4 +18,11 @@ exports.authenticate = async function (req, res, next) {
   }
 };
 
-exports.authorize = async function (req, res, next) {};
+exports.authorize = async function (req, res, next) {
+  if (req.user._id !== req.params.id) {
+    // unauthorized
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  next();
+};

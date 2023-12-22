@@ -3,7 +3,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 const User = require("../models/User");
 const Job = require("../models/Job");
 const router = express.Router();
-
+const { authenticate, authorize } = require("../middleware/auth");
 //get user
 router.get(
   "/:id",
@@ -21,6 +21,8 @@ router.get(
 //update user
 router.put(
   "/:id",
+  authenticate,
+  authorize,
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
@@ -47,6 +49,49 @@ router.get(
       .limit(limit);
 
     res.status(200).json({ jobs });
+  })
+);
+
+// save
+router.post(
+  "/:id/jobs",
+  authenticate,
+  authorize,
+  asyncHandler(async (req, res) => {
+    const job = await Job.create(req.body);
+
+    res.status(200).json(job);
+  })
+);
+
+//delete
+router.delete(
+  "/:id/jobs/:jobId",
+  authenticate,
+  authorize,
+  asyncHandler(async (req, res) => {
+    const job = Job.findById(req.params.jobId);
+    if (!job) return res.status(401).json({ message: "Job not found" });
+
+    await Job.findByIdAndDelete(req.params.jobId);
+  })
+);
+
+//update
+router.put(
+  "/:id/jobs/:jobId",
+  authenticate,
+  authorize,
+  asyncHandler(async (req, res) => {
+    const job = Job.findById(req.params.jobId);
+
+    if (!job) return res.status(401).json({ message: "Job not found" });
+
+    const newJob = Job.findByIdAndUpdate(req.params.jobId, req.body, {
+      new: true,
+    });
+
+    res.status(200).json({ job: newJob });
   })
 );
 

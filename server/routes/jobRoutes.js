@@ -18,25 +18,4 @@ router.get("/", async (req, res) => {
   res.status(200).json(response.data);
 });
 
-// save
-router.post("/save", (req, res) => {
-  res.send("Welcome to the about page!");
-});
-
-//delete
-router.delete("/:id", (req, res) => {
-  // Handle form submission
-  const formData = req.body;
-  // Process the form data and send a response
-  res.send(`Form submitted with data: ${JSON.stringify(formData)}`);
-});
-
-//update
-router.put("/:id", (req, res) => {
-  // Handle form submission
-  const formData = req.body;
-  // Process the form data and send a response
-  res.send(`Form submitted with data: ${JSON.stringify(formData)}`);
-});
-
 module.exports = router;
