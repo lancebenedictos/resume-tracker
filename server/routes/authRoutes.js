@@ -1,19 +1,92 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+const asyncHandler = require("../middleware/asyncHandler");
 
-router.get("/login", (req, res) => {
-  res.send("Hello, this is the homepage!");
-});
+router.post(
+  "/signup",
+  asyncHandler(async (req, res) => {
+    const emailCheck = await User.findOne({ email: req.body.email });
 
-router.get("/signup", (req, res) => {
-  res.send("Welcome to the about page!");
-});
+    if (emailCheck)
+      return res.status(400).json({ message: "Email already exists" });
 
-router.post("/logout", (req, res) => {
-  // Handle form submission
-  const formData = req.body;
-  // Process the form data and send a response
-  res.send(`Form submitted with data: ${JSON.stringify(formData)}`);
-});
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+    const user = await User.create({
+      name: req.body.first_name,
+      password: hashedPassword,
+      email: req.body.email,
+    });
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    user.password = null;
+    res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({ user });
+  })
+);
+
+router.get(
+  "/logout",
+  asyncHandler(async (req, res) => {
+    return res.clearCookie("token").status(200).json({ organizer: null });
+  })
+);
+
+router.post(
+  "/login",
+  asyncHandler(async (req, res) => {
+    const emailCheck = await User.findOne(
+      { email: req.body.email },
+      "+password"
+    );
+
+    if (!emailCheck)
+      return res.status(400).json({ message: "Incorrect email or password" });
+
+    const validPassword = bcrypt.compareSync(
+      req.body.password,
+      emailCheck.password
+    );
+
+    if (!validPassword)
+      return res.status(400).json({ message: "Incorrect email or password" });
+    const token = jwt.sign({ _id: emailCheck._id }, process.env.JWT_SECRET);
+
+    return res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({ user: emailCheck });
+  })
+);
+
+router.get(
+  "/check",
+  asyncHandler(async (req, res) => {
+    const { token } = req.cookies;
+
+    if (!token) return res.json({ user: null });
+
+    try {
+      const data = jwt.verify(token, process.env.JWT_SECRET);
+
+      const user = await User.findById(data._id);
+      user.password = null;
+
+      res.status(200).json({ user: user });
+    } catch (err) {
+      if (!token) return res.json({ user: null });
+    }
+  })
+);
 module.exports = router;

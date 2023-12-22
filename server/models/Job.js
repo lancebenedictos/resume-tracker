@@ -2,30 +2,34 @@ const mongoose = require("mongoose");
 
 // Define the job schema
 const jobSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    trim: true,
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
-  company: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  location: {
-    type: String,
-    trim: true,
-  },
-  description: {
-    type: String,
-    trim: true,
-  },
-  requirements: {
-    type: [String],
-  },
-  application_deadline: {
-    type: Date,
-  },
+  employer_name: String,
+  employer_logo: String,
+  employer_website: String,
+  job_publisher: String,
+  job_employment_type: String,
+  job_title: String,
+  job_apply_link: String,
+  job_google_link: String,
+  apply_options: [Object],
+  job_description: String,
+  job_is_remote: String,
+  job_posted_at_datetime_utc: String,
+  job_city: String,
+  job_state: String,
+  job_country: String,
+  job_latitude: Number,
+  job_longitude: Number,
+  job_benefits: String,
+  job_offer_expiration_datetime_utc: String,
+  job_required_education: Object,
+  job_required_skills: Object,
+  job_required_experience: Object,
+  job_required_skills: Object,
+  job_naics_name: String,
   // Resume field
   resume: {
     contact_number: {
@@ -120,9 +124,6 @@ const jobSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  // Add more job-related fields
-
-  // Timestamps for tracking creation and update times
   timestamps: true,
 });
 
