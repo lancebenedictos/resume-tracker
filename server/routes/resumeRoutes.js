@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-//generate resume
+//TODO: generate resume
 router.post("/", (req, res) => {
   res.send("Hello, this is the homepage!");
 });

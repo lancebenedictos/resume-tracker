@@ -30,16 +30,16 @@ app.use(
 );
 
 // routes
-app.use("/auth", authRoutes);
-app.use("/coverLetter", coverLetterRoutes);
-app.use("/job", jobRoutes);
-app.use("/resume", resumeRoutes);
-app.use("/userRoutes", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/coverLetter", coverLetterRoutes);
+app.use("/api/job", jobRoutes);
+app.use("/api/resume", resumeRoutes);
+app.use("/api/userRoutes", userRoutes);
 // routes end
 
-app.get("/", async (req, res) => {
-  res.send("Hello, World!");
-});
+// app.get("/", async (req, res) => {
+//   res.send("Hello, World!");
+// });
 
 app.use(errorHandler);
 

@@ -124,7 +124,6 @@ const jobSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  timestamps: true,
 });
 
 // Create the Mongoose model

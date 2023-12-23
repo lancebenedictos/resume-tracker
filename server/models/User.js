@@ -9,7 +9,12 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  name: {
+  first_name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  last_name: {
     type: String,
     required: true,
     trim: true,
@@ -101,9 +106,6 @@ const userSchema = new mongoose.Schema({
     ],
     // Add more fields as needed
   },
-
-  // Timestamps for tracking creation and update times
-  timestamps: true,
 });
 
 // Create the Mongoose model
