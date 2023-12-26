@@ -32,9 +32,9 @@ app.use(
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/coverLetter", coverLetterRoutes);
-app.use("/api/job", jobRoutes);
+app.use("/api/jobs", jobRoutes);
 app.use("/api/resume", resumeRoutes);
-app.use("/api/userRoutes", userRoutes);
+app.use("/api/user", userRoutes);
 // routes end
 
 // app.get("/", async (req, res) => {

@@ -3,9 +3,12 @@ import RightPane from "./RightPane";
 import useUser from "@/hooks/useUser";
 
 function Navbar() {
-  const { user, isError } = useUser();
+  const { user, isError, isLoading } = useUser();
 
-  console.log(user);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <nav className="fixed top-0 h-[40px] z-10 bg-white w-full shadow-md">

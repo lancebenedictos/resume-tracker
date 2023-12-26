@@ -40,7 +40,7 @@ router.put(
 
 //get user jobs (pagination)
 router.get(
-  "/:id/jobs/:page",
+  "/jobs/:page",
   asyncHandler(async (req, res) => {
     const limit = 10;
     const page = (req.params.page - 1) * limit;
@@ -54,11 +54,16 @@ router.get(
 
 // save
 router.post(
-  "/:id/jobs",
+  "/jobs",
   authenticate,
-  authorize,
   asyncHandler(async (req, res) => {
-    const job = await Job.create(req.body);
+    const { user } = req;
+    console.log(req.body);
+    const job = await Job.create({
+      ...req.body.job,
+      user: user._id,
+      _id: req.body.job.job_id,
+    });
 
     res.status(200).json(job);
   })

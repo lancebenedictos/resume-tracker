@@ -31,7 +31,13 @@ function Signin() {
     <main className="sm:p-0">
       <div className=" bg-[#fefefe] shadow-md full flex flex-col items-center  max-w-2xl lg:h-[80vh] p-2 md:p-4 lg:mx-auto">
         <h2 className="text-3xl pt-4 ">Login</h2>
-        <p className="pt-2">Welcome welcome back</p>
+        <p className="pt-2">Welcome</p>
+
+        <div className="w-full bg-gray-100 p-4 rounded-md">
+          <h2 className=" font-bold">Demo account</h2>
+          <p>Email: demo@account.com</p>
+          <p>Password: Demo1234</p>
+        </div>
         <Formik
           validationSchema={LoginSchema}
           initialValues={{
@@ -45,7 +51,7 @@ function Signin() {
           {({ values, errors, touched, handleChange, handleSubmit }) => (
             <form
               action=""
-              className="flex flex-col w-full py-4 gap-4"
+              className="flex flex-col w-full py-4 gap-2"
               onSubmit={handleSubmit}
             >
               <Label htmlFor="email">Email</Label>

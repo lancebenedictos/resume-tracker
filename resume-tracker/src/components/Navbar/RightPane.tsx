@@ -9,10 +9,10 @@ function RightPane({ user, isError }: props) {
 
   const mutation = useMutation({
     mutationFn: logout,
-    onSuccess: (_data) => {
+    onSuccess: () => {
       // Invalidate and refetch
       // queryClient.invalidateQueries({ queryKey: ["organizer"] });
-      queryClient.setQueryData(["organizer"], _data);
+      queryClient.setQueryData(["user"], null);
     },
   });
   return (
