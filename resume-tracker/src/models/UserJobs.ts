@@ -1,5 +1,6 @@
 import User from "./User";
 type UserJobs = {
+  _id: string;
   user: User;
   employer_name?: string;
   employer_logo?: string;

@@ -1,37 +1,30 @@
+import {
+  Award,
+  Certification,
+  Education,
+  JobExperience,
+  Project,
+} from "./ResumeInfo";
+
 type User = {
   email: string;
   first_name: string;
   last_name: string;
-  resume_info?: {
-    contact_number?: number;
-    linkedin_link?: string;
-    portfolio_link?: string;
-    achievements?: [string];
-    job_experience?: [
-      {
-        title: string;
-        company: string;
-        start_date?: Date;
-        end_date: Date;
-        description: string;
-      }
-    ];
-    skills?: [string];
-    education?: [
-      {
-        degree: string;
-        institution: string;
-        graduation_year: number;
-      }
-    ];
-    summary?: string;
-    awards?: [
-      {
-        title: string;
-        year: number;
-        description: string;
-      }
-    ];
+  phone_number?: string;
+  socials: {
+    name: string;
+    link: string;
+  }[];
+  resume_info: {
+    skills: [string];
+    education: [Education];
+    summary: string;
+    awards: [Award];
+    certifications: [Certification];
+    projects: [Project];
+    languages: string[];
+    job_experience: [JobExperience];
+
     // Add more fields as needed
   };
 };

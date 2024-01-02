@@ -1,5 +1,6 @@
 import { BASE } from "@/constant/apiBase";
 import Job from "@/models/Job";
+import UserJobs from "@/models/UserJobs";
 import axios from "axios";
 
 export const searchJob = async (
@@ -23,4 +24,11 @@ export const saveJob = async (job: Job): Promise<Job> => {
   );
 
   return res.data.job;
+};
+
+export const getUserJobs = async (page = 1): Promise<UserJobs[]> => {
+  const res = await axios.get(`${BASE}/user/jobs/${page}`, {
+    withCredentials: true,
+  });
+  return res.data.jobs;
 };

@@ -10,8 +10,6 @@ function RightPane({ user, isError }: props) {
   const mutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      // Invalidate and refetch
-      // queryClient.invalidateQueries({ queryKey: ["organizer"] });
       queryClient.setQueryData(["user"], null);
     },
   });
@@ -25,7 +23,7 @@ function RightPane({ user, isError }: props) {
       ) : (
         <>
           <Link to="/jobs">MyJobs</Link>
-          <p>My profile</p>
+          <Link to="/profile">My profile</Link>
           <button onClick={() => mutation.mutate()}>Log out</button>
         </>
       )}

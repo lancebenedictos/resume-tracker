@@ -23,87 +23,36 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone_number: String,
+  socials: [
+    {
+      name: String,
+      link: String,
+    },
+  ],
   resume_info: {
-    contact_number: {
-      type: String,
-      trim: true,
-    },
-    linkedin_link: {
-      type: String,
-      trim: true,
-    },
-    portfolio_link: {
-      type: String,
-      trim: true,
-    },
-    achievements: {
-      type: [String],
-    },
     job_experience: [
       {
-        title: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        company: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        start_date: {
-          type: Date,
-          required: true,
-        },
-        end_date: {
-          type: Date,
-        },
-        description: {
-          type: String,
-          trim: true,
-        },
+        title: String,
+        company: String,
+        start_date: Date,
+        end_date: Date,
+        responsibilitiesString: [String],
       },
     ],
-    skills: {
-      type: [String],
-    },
+    skills: [String],
     education: [
       {
-        degree: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        institution: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        graduation_year: {
-          type: Number,
-        },
+        degree: String,
+        institution: String,
+        graduation_year: String,
       },
     ],
-    summary: {
-      type: String,
-      trim: true,
-    },
-    awards: [
-      {
-        title: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        year: {
-          type: Number,
-        },
-        description: {
-          type: String,
-          trim: true,
-        },
-      },
-    ],
+    summary: String,
+    awards: [{ title: String, year: Number, description: String }],
+    certifications: [{ name: String, year: Number }],
+    projects: [{ name: String, year: Number, details: String }],
+    languages: [String],
     // Add more fields as needed
   },
 });

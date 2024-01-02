@@ -1,4 +1,3 @@
-import Job from "@/models/Job";
 import DefaultImage from "../../assets/defaultImage.jpeg";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -7,36 +6,45 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { saveJob } from "@/api/jobs";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { saveJob } from "@/api/jobs";
+import UserJobs from "@/models/UserJobs";
+import { Button } from "@/components/ui/button";
 
 type props = {
-  job: Job;
+  job: UserJobs;
 };
 
 function JobCard({ job }: props) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: saveJob,
-    onSuccess: (job, _, context: Job[]) => {
-      // Invalidate and refetch
-      // queryClient.invalidateQueries({ queryKey: ["organizer"] });
-      queryClient.setQueryData(["jobs"], [...context, job]);
-    },
-    onError: () => {
-      alert("something went wrong");
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: saveJob,
+  //   onSuccess: (job, _, context: UserJobs[]) => {
+  //     // Invalidate and refetch
+  //     // queryClient.invalidateQueries({ queryKey: ["organizer"] });
+  //     queryClient.setQueryData(["jobs"], [...context, job]);
+  //   },
+  //   onError: () => {
+  //     alert("something went wrong");
+  //   },
+  // });
+
   const date = job.job_offer_expiration_datetime_utc
     ? new Date(job.job_offer_expiration_datetime_utc)
     : null;
+
   return (
     <div className="mb-4 shadow-md m-2 p-4">
       {/* Header */}
-      <span className="flex justify-between">
-        <h3 className=" font-bold text-lg mb-2">{job.job_title}</h3>
-        <button onClick={() => mutation.mutate(job)}>Save</button>
+      <span className="flex justify-between items-center mb-2">
+        <h3 className=" font-bold text-lg ">{job.job_title}</h3>
+        {/* <button onClick={() => mutation.mutate(job)}>Save</button> */}
+        <span className="flex gap-2">
+          <Button variant="ghost">Resume</Button>
+          <Button variant="ghost">Letter</Button>
+          <Button variant="destructive">Delete</Button>
+        </span>
       </span>
       <span className="flex items-center gap-2">
         <img

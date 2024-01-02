@@ -8,6 +8,8 @@ import Navbar from "./components/Navbar";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import MyJobs from "./pages/MyJobs";
+import Profile from "./pages/Profile";
+
 // import JobInfo from "./pages/JobInfo";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/signin", element: <SignIn /> },
       { path: "/jobs", element: <MyJobs /> },
       { path: "/account", element: <Account /> },
+      { path: "/profile", element: <Profile /> },
     ],
   },
 ]);

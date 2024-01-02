@@ -6,7 +6,7 @@ const router = express.Router();
 const { authenticate, authorize } = require("../middleware/auth");
 //get user
 router.get(
-  "/:id",
+  "/",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
@@ -20,7 +20,7 @@ router.get(
 
 //update user
 router.put(
-  "/:id",
+  "/",
   authenticate,
   authorize,
   asyncHandler(async (req, res) => {
@@ -41,12 +41,11 @@ router.put(
 //get user jobs (pagination)
 router.get(
   "/jobs/:page",
+  authenticate,
   asyncHandler(async (req, res) => {
     const limit = 10;
     const page = (req.params.page - 1) * limit;
-    const jobs = await Job.find({ user: req.params.id })
-      .skip(page)
-      .limit(limit);
+    const jobs = await Job.find({ user: req.user._id }).skip(page).limit(limit);
 
     res.status(200).json({ jobs });
   })

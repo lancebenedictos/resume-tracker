@@ -19,7 +19,7 @@ function Navbar() {
         </div>
       </nav>
 
-      <div className="mt-[50px]">
+      <div className="mt-[40px]">
         <Outlet />
       </div>
     </>
