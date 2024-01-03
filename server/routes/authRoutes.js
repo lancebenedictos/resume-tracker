@@ -15,10 +15,12 @@ router.post(
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const user = await User.create({
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
+      personal_info: {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+      },
       password: hashedPassword,
-      email: req.body.email,
     });
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
     user.password = null;
@@ -44,7 +46,7 @@ router.post(
   "/login",
   asyncHandler(async (req, res) => {
     const emailCheck = await User.findOne(
-      { email: req.body.email },
+      { personal_info: { email: req.body.email } },
       "+password"
     );
 

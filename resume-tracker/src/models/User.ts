@@ -3,18 +3,12 @@ import {
   Certification,
   Education,
   JobExperience,
+  PersonalInfo,
   Project,
 } from "./ResumeInfo";
 
 type User = {
-  email: string;
-  first_name: string;
-  last_name: string;
-  phone_number?: string;
-  socials: {
-    name: string;
-    link: string;
-  }[];
+  personal_info: PersonalInfo;
   resume_info: {
     skills: [string];
     education: [Education];

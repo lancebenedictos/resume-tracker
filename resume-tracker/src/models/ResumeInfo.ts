@@ -1,9 +1,9 @@
 export type PersonalInfo = {
-  first_name?: string;
+  first_name: string;
   last_name: string;
-  location?: string;
-  phoneNumber?: string;
-  email?: string;
+  location: string;
+  phone_number: string;
+  email: string;
   socials?: {
     name: string;
     link: string;
