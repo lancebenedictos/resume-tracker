@@ -5,39 +5,39 @@ export type PersonalInfo = {
   phone_number: string;
   email: string;
   socials?: {
-    name: string;
-    link: string;
+    name?: string;
+    link?: string;
   }[];
 };
 
 export type Education = {
   degree: string;
   institution: string;
-  graduation_year: number;
+  graduation_year: string;
 };
 
 export type JobExperience = {
   title: string;
   company: string;
-  start_date: Date;
-  end_date?: Date;
-  responsibilities?: [string];
+  start_date: string;
+  end_date?: string;
+  responsibilities: string[];
 };
 
 export type Award = {
   title: string;
-  year: number;
+  year: string;
   description: string;
 };
 
 export type Certification = {
   name?: string;
-  year?: number;
+  year?: string;
 };
 
 export type Project = {
   name?: string;
-  year?: number;
+  year?: string;
   details?: string;
 };
 type ResumeInfo = {

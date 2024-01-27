@@ -16,9 +16,8 @@ type User = {
     awards: [Award];
     certifications: [Certification];
     projects: [Project];
-    languages: string[];
+    languages: [string];
     job_experience: [JobExperience];
-
     // Add more fields as needed
   };
 };

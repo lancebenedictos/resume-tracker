@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import MyJobs from "./pages/MyJobs";
 import Profile from "./pages/Profile";
+import Resume from "./pages/Resume";
 
 // import JobInfo from "./pages/JobInfo";
 
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "/jobs", element: <MyJobs /> },
       { path: "/account", element: <Account /> },
       { path: "/profile", element: <Profile /> },
+      { path: "/resume/:id", element: <Resume /> },
     ],
   },
 ]);

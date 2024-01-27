@@ -10,6 +10,9 @@ import {
 // import { saveJob } from "@/api/jobs";
 import UserJobs from "@/models/UserJobs";
 import { Button } from "@/components/ui/button";
+import { createResume } from "@/api/resume";
+import { createCoverLetter } from "@/api/coverLetter";
+import { Link } from "react-router-dom";
 
 type props = {
   job: UserJobs;
@@ -41,8 +44,22 @@ function JobCard({ job }: props) {
         <h3 className=" font-bold text-lg ">{job.job_title}</h3>
         {/* <button onClick={() => mutation.mutate(job)}>Save</button> */}
         <span className="flex gap-2">
-          <Button variant="ghost">Resume</Button>
-          <Button variant="ghost">Letter</Button>
+          <Button
+            variant="ghost"
+            // onClick={() => {
+            //   createResume(job._id);
+            // }}
+          >
+            <Link to={`/resume/${job._id}`}>Resume</Link>
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              createCoverLetter(job._id);
+            }}
+          >
+            Letter
+          </Button>
           <Button variant="destructive">Delete</Button>
         </span>
       </span>

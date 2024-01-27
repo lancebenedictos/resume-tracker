@@ -80,7 +80,7 @@ const reducer = (
     case ActionTypes.SET_INFO:
       return {
         ...state,
-        resume_info: { ...state?.resume_info, ...action.payload },
+        personal_info: { ...action.payload },
       };
     case ActionTypes.SET_EDUCATION:
       return {

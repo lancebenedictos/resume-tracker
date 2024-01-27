@@ -4,7 +4,7 @@ import useUser from "@/hooks/useUser";
 
 function Navbar() {
   const { user, isError, isLoading } = useUser();
-
+  console.log(user);
   if (isLoading) {
     return <p>Loading...</p>;
   }

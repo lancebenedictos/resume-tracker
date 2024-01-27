@@ -12,7 +12,6 @@ function Home() {
   const [query, setQuery] = useState("");
 
   async function searchJobs(query: string = "", page: number = 1) {
-    console.log("called");
     const res = await searchJob(query, page.toString());
     setPage((page) => page + 1);
     if (res.length < 10) {
@@ -20,9 +19,20 @@ function Home() {
     }
     setJobs((jobs) => [...jobs, ...res]);
   }
+
+  async function searchJobsPageOne(query: string = "") {
+    const res = await searchJob(query, page.toString());
+    setPage((page) => page + 1);
+    if (res.length < 10) {
+      setHasMore(false);
+    }
+
+    console.log(res);
+    setJobs(res);
+  }
   return (
     <div className="w-[80%] mx-auto">
-      <SearchBar searchJobs={searchJobs} setQuery={setQuery} />
+      <SearchBar searchJobs={searchJobsPageOne} setQuery={setQuery} />
       {jobs.length > 0 ? (
         <InfiniteScroll
           dataLength={jobs.length}

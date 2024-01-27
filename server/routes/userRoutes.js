@@ -22,15 +22,14 @@ router.get(
 router.put(
   "/",
   authenticate,
-  authorize,
   asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.user._id);
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
       new: true,
     });
 
@@ -40,7 +39,7 @@ router.put(
 
 //get user jobs (pagination)
 router.get(
-  "/jobs/:page",
+  "/jobs/page/:page",
   authenticate,
   asyncHandler(async (req, res) => {
     const limit = 10;
@@ -51,17 +50,26 @@ router.get(
   })
 );
 
+router.get(
+  "/jobs/:id",
+  authenticate,
+  asyncHandler(async (req, res) => {
+    const job = await Job.findById(req.params.id);
+
+    res.status(200).json({ job });
+  })
+);
+
 // save
 router.post(
   "/jobs",
   authenticate,
   asyncHandler(async (req, res) => {
     const { user } = req;
-    console.log(req.body);
     const job = await Job.create({
       ...req.body.job,
       user: user._id,
-      _id: req.body.job.job_id,
+      job_id: req.body.job.job_id,
     });
 
     res.status(200).json(job);

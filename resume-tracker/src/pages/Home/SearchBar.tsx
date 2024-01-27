@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { useRef } from "react";
 
 type props = {
-  searchJobs: (query: string, page: number) => void;
+  searchJobs: (query: string) => void;
   setQuery: (query: string) => void;
 };
 
@@ -19,7 +19,7 @@ function SearchBar({ searchJobs, setQuery }: props) {
       <Button
         onClick={() => {
           setQuery(searchRef.current?.value || "");
-          searchJobs(searchRef.current?.value || "", 1);
+          searchJobs(searchRef.current?.value || "");
         }}
       >
         Search

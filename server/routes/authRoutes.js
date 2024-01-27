@@ -46,9 +46,11 @@ router.post(
   "/login",
   asyncHandler(async (req, res) => {
     const emailCheck = await User.findOne(
-      { personal_info: { email: req.body.email } },
+      { "personal_info.email": req.body.email },
       "+password"
     );
+
+    console.log(emailCheck);
 
     if (!emailCheck)
       return res.status(400).json({ message: "Incorrect email or password" });
@@ -83,8 +85,7 @@ router.get(
     try {
       const data = jwt.verify(token, process.env.JWT_SECRET);
 
-      const user = await User.findById(data._id);
-      user.password = null;
+      const user = await User.findById(data._id).select("-password");
 
       res.status(200).json({ user: user });
     } catch (err) {

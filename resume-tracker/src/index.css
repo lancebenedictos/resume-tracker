@@ -74,3 +74,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+.profile h3 {
+  @apply font-semibold text-xl;
+}
+
+.profile .add-btn {
+  @apply mx-auto font-medium mt-2 py-2 rounded-sm;
+}
+
+.profile .section {
+  @apply flex gap-3 flex-col;
+}
