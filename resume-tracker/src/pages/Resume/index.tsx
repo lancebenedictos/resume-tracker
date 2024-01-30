@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Preview from "./Preview";
-import ResumeInfo from "./ResumeInfo";
 import { getUserJob } from "@/api/jobs";
 import { useParams } from "react-router-dom";
+import { createResume } from "@/api/resume";
+import { usePDF } from "react-to-pdf";
 
 function Resume() {
   const { id } = useParams();
@@ -10,14 +11,46 @@ function Resume() {
     queryKey: ["job", id],
     queryFn: () => getUserJob(id || ""),
   });
+  const queryClient = useQueryClient();
+  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
-  console.log(job);
+  const mutation = useMutation({
+    mutationFn: createResume,
+    onSuccess: (_data) => {
+      console.log(_data);
+      queryClient.setQueryData(["job", id], _data);
+    },
+  });
 
-  if (isLoading) return <h1>loading</h1>;
+  // console.log(job);
+
+  console.log(targetRef);
+
+  if (isLoading || mutation.isPending) return <h1>loading</h1>;
+
+  if (!job) return <h1>Job not found</h1>;
   return (
-    <div className="flex">
-      <ResumeInfo />
-      <Preview />
+    <div className=" w-[80%] mx-auto">
+      <div className="flex gap-2">
+        <button
+          onClick={() => {
+            mutation.mutate(id!);
+          }}
+        >
+          Generate resume
+        </button>
+
+        <button
+          onClick={() => {
+            toPDF();
+          }}
+        >
+          Download resume
+        </button>
+      </div>
+      <div className="w-full">
+        <Preview job={job} ref={targetRef} />
+      </div>
     </div>
   );
 }

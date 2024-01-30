@@ -9,7 +9,7 @@ exports.authenticate = async function (req, res, next) {
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findById(data._id);
+    const user = await User.findById(data._id).select("+password");
 
     req.user = user;
     next();

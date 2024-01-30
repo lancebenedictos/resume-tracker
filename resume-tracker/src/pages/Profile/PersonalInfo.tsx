@@ -56,8 +56,30 @@ function PersonalInfo({
         <Input
           placeholder="Email address"
           id="email"
-          type="text"
+          type="email"
           value={info.email}
+          onChange={change}
+        />
+      </span>
+
+      <span>
+        <Label htmlFor="email">Phone number</Label>
+        <Input
+          placeholder="(647)818-5209"
+          id="phone_number"
+          type="text"
+          value={info.phone_number}
+          onChange={change}
+        />
+      </span>
+
+      <span>
+        <Label htmlFor="email">Location</Label>
+        <Input
+          placeholder="Mississauga, ON"
+          id="location"
+          type="text"
+          value={info.location}
           onChange={change}
         />
       </span>

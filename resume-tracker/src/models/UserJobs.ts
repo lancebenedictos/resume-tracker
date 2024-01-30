@@ -1,3 +1,4 @@
+import ResumeInfo from "./ResumeInfo";
 import User from "./User";
 type UserJobs = {
   _id: string;
@@ -43,38 +44,39 @@ type UserJobs = {
   };
   job_naics_name?: string;
   // Resume field
-  resume?: {
-    contact_number: string;
-    linkedin_link: string;
-    portfolio_link: string;
-    achievements: [string];
-    job_experience: [
-      {
-        title: string;
-        company: string;
-        start_date: Date;
-        end_date: Date;
-        description: string;
-      }
-    ];
-    skills: [string];
-    education: [
-      {
-        degree: string;
-        institution: string;
-        graduation_year: number;
-      }
-    ];
-    summary: string;
-    awards: [
-      {
-        title: string;
-        year: number;
-        description: string;
-      }
-    ];
-    // Add more fields as needed
-  };
+  resume_info?: ResumeInfo;
+  // {
+  //   contact_number: string;
+  //   linkedin_link: string;
+  //   portfolio_link: string;
+  //   achievements: [string];
+  //   job_experience: [
+  //     {
+  //       title: string;
+  //       company: string;
+  //       start_date: Date;
+  //       end_date: Date;
+  //       description: string;
+  //     }
+  //   ];
+  //   skills: [string];
+  //   education: [
+  //     {
+  //       degree: string;
+  //       institution: string;
+  //       graduation_year: number;
+  //     }
+  //   ];
+  //   summary: string;
+  //   awards: [
+  //     {
+  //       title: string;
+  //       year: number;
+  //       description: string;
+  //     }
+  //   ];
+  // Add more fields as needed
+  // };
   // Cover letter field
   cover_letter: string;
 };

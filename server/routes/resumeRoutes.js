@@ -12,11 +12,12 @@ router.get(
   "/:jobId",
   authenticate,
   asyncHandler(async (req, res) => {
-    const job = await Job.findById(req.params.jobId);
+    const job = await Job.findById(req.params.jobId).populate("user");
     const { user } = req;
+    console.log("here");
 
     if (!user || !job) return res.status(500);
-    const message = `Create an ATS friendly resume. The job description is ${job.job_description}. Job title is ${job.job_title}. Person details are ${user.resume_info}. Choose 3 relevant job experiences. Choose skills from ${user.resume_info.skills} that are necessary for ${job.job_description}
+    const message = `Create an ATS friendly resume. The job description is ${job.job_description}. Job title is ${job.job_title}. Person details are ${user.resume_info}. Choose 3 relevant job experiences. You can build a resume using the details from ${user.resume_info}, IT IS IMPORTANT THAT YOU DO NOT ADD INFORMATION OUTSIDE THE GIVEN INFORMATION. You are allowed to change summary to match job description
     respond in this schema :
    {
     resume_info: { job_experience: [
@@ -26,6 +27,7 @@ router.get(
         start_date: String,
         end_date: String,
         responsibilities: [String],
+        location: String
       },
     ],
     skills: [String],
@@ -59,10 +61,14 @@ router.get(
       response_format: { type: "json_object" },
     });
 
-    const { resume_info } = JSON.parse(completion.choices[0].message.content);
+    const { resume_info } = await JSON.parse(
+      completion.choices[0].message.content
+    );
+
     job.resume_info = resume_info;
+
     await job.save();
-    console.log(resume_info);
+
     res.status(200).json(job);
   })
 );

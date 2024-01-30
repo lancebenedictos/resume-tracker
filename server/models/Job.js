@@ -43,6 +43,7 @@ const jobSchema = new mongoose.Schema({
         start_date: String,
         end_date: String,
         responsibilities: [String],
+        location: String,
       },
     ],
     skills: [String],

@@ -10,7 +10,6 @@ import {
 // import { saveJob } from "@/api/jobs";
 import UserJobs from "@/models/UserJobs";
 import { Button } from "@/components/ui/button";
-import { createResume } from "@/api/resume";
 import { createCoverLetter } from "@/api/coverLetter";
 import { Link } from "react-router-dom";
 

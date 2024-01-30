@@ -54,7 +54,7 @@ type setLanguages = {
   payload: [string];
 };
 
-type actionType =
+export type actionType =
   | setPersonalInfo
   | setEducation
   | setExperience

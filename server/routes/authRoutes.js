@@ -50,11 +50,8 @@ router.post(
       "+password"
     );
 
-    console.log(emailCheck);
-
     if (!emailCheck)
       return res.status(400).json({ message: "Incorrect email or password" });
-
     const validPassword = bcrypt.compareSync(
       req.body.password,
       emailCheck.password

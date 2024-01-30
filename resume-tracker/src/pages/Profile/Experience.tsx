@@ -68,10 +68,27 @@ function Experience({
           </span>
 
           <span>
+            <Label htmlFor="location">Location</Label>
+            <Input
+              placeholder="Mississauga, ON"
+              id="location"
+              type="text"
+              value={exp.location}
+              onChange={(e) => {
+                const { value } = e.currentTarget;
+                const exp = experiences[index];
+                exp.location = value;
+                experiences[index] = exp;
+                updateExperience(experiences);
+              }}
+            />
+          </span>
+
+          <span>
             <Label htmlFor="start_date">Start date</Label>
             <Input
               id="start_date"
-              type="date"
+              type="month"
               value={exp.start_date}
               onChange={(e) => {
                 const { value } = e.currentTarget;
@@ -87,7 +104,7 @@ function Experience({
             <Label htmlFor="end_date">End date</Label>
             <Input
               id="end_date"
-              type="date"
+              type="month"
               value={exp.end_date}
               onChange={(e) => {
                 const { value } = e.currentTarget;
@@ -135,6 +152,7 @@ function Experience({
             company: "",
             start_date: formatDateToYYYYMMDD(new Date()),
             responsibilities: new Array<string>(),
+            location: "",
           });
 
           updateExperience(experiences);

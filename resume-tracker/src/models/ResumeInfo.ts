@@ -19,9 +19,11 @@ export type Education = {
 export type JobExperience = {
   title: string;
   company: string;
+  location: string;
   start_date: string;
   end_date?: string;
   responsibilities: string[];
+  _id?: string;
 };
 
 export type Award = {

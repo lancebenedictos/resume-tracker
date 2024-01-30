@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   resume_info: {
     job_experience: [
@@ -40,6 +41,7 @@ const userSchema = new mongoose.Schema({
         company: String,
         start_date: String,
         end_date: String,
+        location: String,
         responsibilities: [String],
       },
     ],

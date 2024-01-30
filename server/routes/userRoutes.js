@@ -54,7 +54,7 @@ router.get(
   "/jobs/:id",
   authenticate,
   asyncHandler(async (req, res) => {
-    const job = await Job.findById(req.params.id);
+    const job = await Job.findById(req.params.id).populate("user");
 
     res.status(200).json({ job });
   })
