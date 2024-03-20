@@ -6,7 +6,7 @@ function Summary({
   updateSummary,
 }: {
   updateSummary: (summary: string) => void;
-  summary: string;
+  summary: string | undefined;
 }) {
   function change(e: React.ChangeEvent<HTMLTextAreaElement>) {
     updateSummary(e.target.value);

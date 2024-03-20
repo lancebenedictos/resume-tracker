@@ -7,6 +7,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 router.get(
   "/",
   asyncHandler(async (req, res) => {
+    console.log(req.query);
     const options = {
       method: "GET",
       url: "https://jsearch.p.rapidapi.com/search",

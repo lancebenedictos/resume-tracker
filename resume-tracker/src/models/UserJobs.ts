@@ -44,7 +44,7 @@ type UserJobs = {
   };
   job_naics_name?: string;
   // Resume field
-  resume_info?: ResumeInfo;
+  resume_info: ResumeInfo;
   // {
   //   contact_number: string;
   //   linkedin_link: string;

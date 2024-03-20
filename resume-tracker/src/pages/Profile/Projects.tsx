@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Project } from "@/models/ResumeInfo";
 import { Label } from "@radix-ui/react-label";
 import AddButton from "./common/AddButton";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 function Projects({
   updateProjects,
@@ -15,23 +16,35 @@ function Projects({
     <div>
       <h3>Projects</h3>
       {projects.map((project, index) => (
-        <div key={`project-${index}`} className="section mt-4">
-          <span>
-            <Label htmlFor="title">Name</Label>
-            <Input
-              placeholder="Project name"
-              id="name"
-              type="text"
-              value={project.name}
-              onChange={(e) => {
-                const { value } = e.currentTarget;
-                const project = projects[index];
-                project.name = value;
-                projects[index] = project;
+        <div key={`project-${index}`} className="section mt-4 hidden-delete">
+          <div className=" flex gap-4 items-center">
+            <span className="flex-grow">
+              <Label htmlFor="title">Name</Label>
+              <Input
+                placeholder="Project name"
+                id="name"
+                type="text"
+                value={project.name}
+                onChange={(e) => {
+                  const { value } = e.currentTarget;
+                  const project = projects[index];
+                  project.name = value;
+                  projects[index] = project;
+                  updateProjects(projects);
+                }}
+              />
+            </span>
+
+            <button
+              className="hidden-delete-btn px-2"
+              onClick={() => {
+                projects.splice(index, 1);
                 updateProjects(projects);
               }}
-            />
-          </span>
+            >
+              <HiOutlineXMark />
+            </button>
+          </div>
           <span>
             <Label htmlFor="year">Year</Label>
             <Input

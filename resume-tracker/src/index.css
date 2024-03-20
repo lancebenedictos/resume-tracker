@@ -86,3 +86,12 @@
 .profile .section {
   @apply flex gap-3 flex-col;
 }
+
+.hidden-delete:hover .hidden-delete-btn {
+  display: block;
+}
+
+.hidden-delete-btn {
+  display: none;
+  @apply bg-red-200 text-white aspect-square rounded-sm;
+}

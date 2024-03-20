@@ -5,12 +5,14 @@ import UserJobs from "@/models/UserJobs";
 
 export const searchJob = async (
   query: string,
-  page: string
+  page: string,
+  radius: number
 ): Promise<Job[]> => {
   const res = await axios.get(`${BASE}/jobs`, {
     params: {
       query,
       page,
+      radius,
     },
   });
   return res.data.jobs;
@@ -35,6 +37,13 @@ export const getUserJobs = async (page = 1): Promise<UserJobs[]> => {
 
 export const getUserJob = async (id: string): Promise<UserJobs> => {
   const res = await axios.get(`${BASE}/user/jobs/${id}`, {
+    withCredentials: true,
+  });
+  return res.data.job;
+};
+
+export const deleteUserJob = async (id: string): Promise<UserJobs> => {
+  const res = await axios.delete(`${BASE}/user/jobs/${id}`, {
     withCredentials: true,
   });
   return res.data.job;

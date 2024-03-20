@@ -52,6 +52,7 @@ const jobSchema = new mongoose.Schema({
         degree: String,
         institution: String,
         graduation_year: String,
+        info: [String],
       },
     ],
     summary: String,

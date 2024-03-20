@@ -1,23 +1,34 @@
 import { Button } from "@/components/ui/button";
-
 import useUser from "@/hooks/useUser";
-import { useReducer } from "react";
-import reducer from "./reducer/profileReducer";
-
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { updateUser } from "@/api/user";
 import ResumeForm from "./ResumeForm";
+import ProfileForm from "./ProfileForm";
+
+import ResumeInfo, { PersonalInfo } from "@/models/ResumeInfo";
 
 function Index() {
-  const { user, isError, isLoading } = useUser();
-  const [state, dispatch] = useReducer(reducer, user);
-  // const queryClient = new QueryClient();
+  const { user: data, isError, isLoading, status } = useUser();
+
   const mutation = useMutation({
     mutationKey: ["user"],
     mutationFn: updateUser,
   });
 
-  if (!state) return;
+  const [personal_info, setPersonalInfo] = useState<PersonalInfo | undefined>(
+    undefined
+  );
+  const [resume_info, setResume] = useState<ResumeInfo | undefined>(undefined);
+
+  useEffect(() => {
+    if (status === "success") {
+      setPersonalInfo(data?.personal_info);
+      setResume(data?.resume_info);
+    }
+  }, [status, data]);
+
+  // if (!state) return;
   if (isError) return <p>Error</p>;
   if (isLoading) return <p>Loading</p>;
 
@@ -28,14 +39,20 @@ function Index() {
         <p className=" font-bold text-xl">Profile</p>
         <Button
           onClick={() => {
-            mutation.mutate(state);
+            if (personal_info && resume_info)
+              mutation.mutate({ resume_info, personal_info });
           }}
         >
           Save
         </Button>
       </div>
 
-      <ResumeForm state={state} dispatch={dispatch} />
+      <main className="mx-auto w-[80%] profile">
+        {personal_info && (
+          <ProfileForm state={personal_info} setState={setPersonalInfo} />
+        )}
+        {resume_info && <ResumeForm state={resume_info} setState={setResume} />}
+      </main>
     </div>
   );
 }

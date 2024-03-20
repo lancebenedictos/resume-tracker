@@ -10,27 +10,30 @@ import {
 // import { saveJob } from "@/api/jobs";
 import UserJobs from "@/models/UserJobs";
 import { Button } from "@/components/ui/button";
-import { createCoverLetter } from "@/api/coverLetter";
 import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteUserJob } from "@/api/jobs";
 
 type props = {
   job: UserJobs;
 };
 
 function JobCard({ job }: props) {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  // const mutation = useMutation({
-  //   mutationFn: saveJob,
-  //   onSuccess: (job, _, context: UserJobs[]) => {
-  //     // Invalidate and refetch
-  //     // queryClient.invalidateQueries({ queryKey: ["organizer"] });
-  //     queryClient.setQueryData(["jobs"], [...context, job]);
-  //   },
-  //   onError: () => {
-  //     alert("something went wrong");
-  //   },
-  // });
+  const mutation = useMutation({
+    mutationFn: () => deleteUserJob(job._id),
+    onSuccess: (job) => {
+      console.log(job);
+      // Invalidate and refetch
+      queryClient.setQueryData(["userJobs"], (oldData: UserJobs[]) => {
+        return oldData.filter((el) => {
+          console.log(el._id !== job._id);
+          return el._id !== job._id;
+        });
+      });
+    },
+  });
 
   const date = job.job_offer_expiration_datetime_utc
     ? new Date(job.job_offer_expiration_datetime_utc)
@@ -51,15 +54,15 @@ function JobCard({ job }: props) {
           >
             <Link to={`/resume/${job._id}`}>Resume</Link>
           </Button>
+
           <Button
-            variant="ghost"
+            variant="destructive"
             onClick={() => {
-              createCoverLetter(job._id);
+              mutation.mutate();
             }}
           >
-            Letter
+            Delete
           </Button>
-          <Button variant="destructive">Delete</Button>
         </span>
       </span>
       <span className="flex items-center gap-2">

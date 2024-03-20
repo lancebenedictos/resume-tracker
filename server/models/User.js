@@ -22,12 +22,9 @@ const userSchema = new mongoose.Schema({
     },
     location: String,
     phone_number: String,
-    socials: [
-      {
-        name: String,
-        link: String,
-      },
-    ],
+    linkedIn: String,
+    github: String,
+    portfolio: String,
   },
   password: {
     type: String,
@@ -51,6 +48,7 @@ const userSchema = new mongoose.Schema({
         degree: String,
         institution: String,
         graduation_year: String,
+        info: [String],
       },
     ],
     summary: String,

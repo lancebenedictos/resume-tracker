@@ -78,14 +78,14 @@ router.post(
 
 //delete
 router.delete(
-  "/:id/jobs/:jobId",
+  "/jobs/:jobId",
   authenticate,
-  authorize,
   asyncHandler(async (req, res) => {
     const job = Job.findById(req.params.jobId);
     if (!job) return res.status(401).json({ message: "Job not found" });
 
-    await Job.findByIdAndDelete(req.params.jobId);
+    const deletedJob = await Job.findByIdAndDelete(req.params.jobId);
+    res.status(200).json({ job: deletedJob });
   })
 );
 

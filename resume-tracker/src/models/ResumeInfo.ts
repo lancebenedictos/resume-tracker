@@ -4,16 +4,17 @@ export type PersonalInfo = {
   location: string;
   phone_number: string;
   email: string;
-  socials?: {
-    name?: string;
-    link?: string;
-  }[];
+
+  linkedIn: string;
+  portfolio: string;
+  github: string;
 };
 
 export type Education = {
   degree: string;
   institution: string;
   graduation_year: string;
+  info: string[];
 };
 
 export type JobExperience = {
@@ -43,15 +44,15 @@ export type Project = {
   details?: string;
 };
 type ResumeInfo = {
-  personalInfo?: PersonalInfo;
-  job_experience?: [JobExperience];
-  skills?: [string];
-  education?: [Education];
+  // personalInfo?: PersonalInfo;
+  job_experience: [JobExperience];
+  skills: [string];
+  education: [Education];
   summary?: string;
-  awards?: [Award];
-  certifications?: [Certification];
-  projects?: [Project];
-  languages?: [string];
+  awards: [Award];
+  certifications: [Certification];
+  projects: [Project];
+  languages: [string];
 };
 
 export default ResumeInfo;

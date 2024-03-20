@@ -1,6 +1,5 @@
 import UserJobs from "@/models/UserJobs";
 import { forwardRef } from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 type Props = { job: UserJobs };
 const Preview = forwardRef<HTMLDivElement, Props>(
@@ -16,9 +15,9 @@ const Preview = forwardRef<HTMLDivElement, Props>(
     console.log(job);
 
     return (
-      <div className="mx-auto w-fit shadow-lg">
+      <div className="mx-auto w-fit shadow-lg p-[0.5in]">
         <div
-          className=" font-serif leading-6 p-[0.5in] flex flex-col w-[8.3in] min-h-[11.7in]"
+          className=" font-serif leading-6  flex flex-col w-[8.3in] min-h-[11.7in]"
           ref={resumeRef}
         >
           <h1 className="text-[18pt] font-bold mb-2 mx-auto">
@@ -53,45 +52,96 @@ const Preview = forwardRef<HTMLDivElement, Props>(
 
           <section className="border-b pb-2 mb-4">
             <h2 className="text-xl font-bold mb-2">Experience</h2>
-            {job.resume_info?.job_experience?.map((exp) => (
-              <div key={exp._id}>
-                <div className="flex justify-between">
-                  <p>
-                    <span className=" font-bold">{exp.company}</span>,
-                    {` ${exp.location}`}
-                  </p>
+            <div className="flex flex-col gap-4">
+              {job.resume_info?.job_experience?.map((exp) => (
+                <div key={exp._id}>
+                  <div className="flex justify-between">
+                    <p>
+                      <span className=" font-bold">{exp.company}</span>,
+                      {` ${exp.location}`}
+                    </p>
 
-                  <p>{`${exp.start_date} - ${exp.end_date || "Present"}`}</p>
+                    <p>{`${exp.start_date} - ${exp.end_date || "Present"}`}</p>
+                  </div>
+
+                  <p>{exp.title}</p>
+                  <ul className="list-disc px-4">
+                    {exp.responsibilities.map((resp) => (
+                      <li contentEditable>{resp}</li>
+                    ))}
+                  </ul>
                 </div>
-
-                <p>{exp.title}</p>
-                <ul className="list-disc px-4">
-                  {exp.responsibilities.map((resp) => (
-                    <li contentEditable>{resp}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              ))}
+            </div>
           </section>
 
           <section className="border-b pb-2 mb-4">
             <h2 className="text-xl font-bold mb-2">Education</h2>
-            <p>Degree Earned, e.g., Bachelor of Science in Computer Science</p>
-            <p>University Name, Graduation Date</p>
-            <p>Relevant coursework or academic achievements</p>
+
+            <div className="flex flex-col gap-4">
+              {job.resume_info?.education?.map((ed, idx) => (
+                <div key={`ed-${idx}`}>
+                  <span className="flex justify-between ">
+                    <p>
+                      <span className=" font-bold">{ed.degree}</span>,
+                      {` ${ed.institution}`}
+                    </p>
+
+                    <p>{ed.graduation_year}</p>
+                  </span>
+
+                  <ul className="list-disc px-4">
+                    {ed.info.map((info) => {
+                      console.log(info);
+                      return <li>{info}</li>;
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </section>
 
           <section className="border-b pb-2 mb-4">
             <h2 className="text-xl font-bold mb-2">Awards</h2>
-            <p>Degree Earned, e.g., Bachelor of Science in Computer Science</p>
+            <div className="flex flex-col gap-4">
+              {job.resume_info?.awards?.map((award, index) => (
+                <div key={`award-${index}`}>
+                  <div className="flex justify-between">
+                    <p className=" font-bold">{award.title}</p>
+                    <p>{award.year}</p>
+                  </div>
+
+                  <p>{award.description}</p>
+                </div>
+              ))}
+            </div>
           </section>
 
           <section className="border-b pb-2 mb-4">
             <h2 className="text-xl font-bold mb-2">Projects</h2>
-            <p>Degree Earned, e.g., Bachelor of Science in Computer Science</p>
+            <div className="flex gap-4 flex-col">
+              {job.resume_info?.projects?.map((project, index) => (
+                <div key={`key-${index}`}>
+                  <div className="flex justify-between">
+                    <p className=" font-bold">{project.name}</p>
+                    <p>{project.year}</p>
+                  </div>
+
+                  <p>{project.details}</p>
+                </div>
+              ))}
+            </div>
           </section>
 
-          {/* ... (other sections) */}
+          <section className="border-b pb-2 mb-4">
+            <h2 className="text-xl font-bold mb-2">Languages</h2>
+
+            <div className="flex gap-2">
+              {job.resume_info?.languages?.map((lang) => (
+                <p key={lang}>{lang}</p>
+              ))}
+            </div>
+          </section>
 
           <section className="border-b pb-2 mb-4">
             <h2 className="text-xl font-bold mb-2">References</h2>

@@ -23,9 +23,7 @@ function JobCard({ job }: props) {
       // Invalidate and refetch
       // queryClient.invalidateQueries({ queryKey: ["organizer"] });
       queryClient.setQueryData(["jobs"], [...context, job]);
-    },
-    onError: () => {
-      alert("something went wrong");
+      alert("saved");
     },
   });
   const date = job.job_offer_expiration_datetime_utc

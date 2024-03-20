@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Award } from "@/models/ResumeInfo";
 import { Label } from "@radix-ui/react-label";
 import AddButton from "./common/AddButton";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 function Awards({
   updateAwards,
@@ -15,23 +16,34 @@ function Awards({
     <div>
       <h3>Awards</h3>
       {awards.map((award, index) => (
-        <div key={`award-${index}`} className="section mt-4">
-          <span>
-            <Label htmlFor="title">Title</Label>
-            <Input
-              placeholder="Award title"
-              id="title"
-              type="text"
-              value={award.title}
-              onChange={(e) => {
-                const { value } = e.currentTarget;
-                const award = awards[index];
-                award.title = value;
-                awards[index] = award;
+        <div key={`award-${index}`} className="section mt-4 hidden-delete ">
+          <div className="flex gap-4 items-center">
+            <span className="flex-grow">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                placeholder="Award title"
+                id="title"
+                type="text"
+                value={award.title}
+                onChange={(e) => {
+                  const { value } = e.currentTarget;
+                  const award = awards[index];
+                  award.title = value;
+                  awards[index] = award;
+                  updateAwards(awards);
+                }}
+              />
+            </span>
+            <button
+              className="hidden-delete-btn px-2"
+              onClick={() => {
+                awards.splice(index, 1);
                 updateAwards(awards);
               }}
-            />
-          </span>
+            >
+              <HiOutlineXMark />
+            </button>
+          </div>
           <span>
             <Label htmlFor="year">Year</Label>
             <Input

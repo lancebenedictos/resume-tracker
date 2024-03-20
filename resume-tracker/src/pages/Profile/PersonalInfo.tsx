@@ -3,12 +3,7 @@ import { PersonalInfo as PersonalInfoType } from "@/models/ResumeInfo";
 
 import { Label } from "@radix-ui/react-label";
 import React from "react";
-import AddButton from "./common/AddButton";
 
-type social = {
-  name?: string;
-  link?: string;
-};
 function PersonalInfo({
   updateInfo,
   info,
@@ -21,12 +16,12 @@ function PersonalInfo({
     updateInfo({ ...info, [id]: value });
   }
 
-  function changeSocial(social: social, index: number) {
-    const socials = info.socials;
-    if (!socials) return;
-    socials[index] = social;
-    updateInfo({ ...info, socials });
-  }
+  // function changeSocial(social: social, index: number) {
+  //   const socials = info.socials;
+  //   if (!socials) return;
+  //   socials[index] = social;
+  //   updateInfo({ ...info, socials });
+  // }
 
   return (
     <div className="flex flex-col gap-3">
@@ -86,7 +81,41 @@ function PersonalInfo({
 
       <span className="flex flex-col">
         <h2>Social links</h2>
-        {info.socials?.map((social, index) => (
+
+        <span>
+          <Label htmlFor="email">LinkedIn</Label>
+          <Input
+            placeholder="linkedin"
+            id="linkedIn"
+            type="text"
+            value={info.linkedIn}
+            onChange={change}
+          />
+        </span>
+
+        <span>
+          <Label htmlFor="email">GitHub</Label>
+          <Input
+            placeholder="github"
+            id="github"
+            type="text"
+            value={info.github}
+            onChange={change}
+          />
+        </span>
+
+        <span>
+          <Label htmlFor="email">Portfolio</Label>
+          <Input
+            placeholder="Mississauga, ON"
+            id="portfolio"
+            type="text"
+            value={info.portfolio}
+            onChange={change}
+          />
+        </span>
+
+        {/* {info.socials?.map((social, index) => (
           <span key={`social-${index}`} className="flex gap-2  rounded-md">
             <Input
               placeholder="Social"
@@ -110,9 +139,9 @@ function PersonalInfo({
               }}
             />
           </span>
-        ))}
+        ))} */}
 
-        <AddButton
+        {/* <AddButton
           title="Add Social"
           onClick={() => {
             const socials = info.socials;
@@ -123,7 +152,7 @@ function PersonalInfo({
 
             updateInfo({ ...info, socials });
           }}
-        />
+        /> */}
       </span>
     </div>
   );

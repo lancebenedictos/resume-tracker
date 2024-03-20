@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import AddButton from "./common/AddButton";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 function Languages({
   languages,
@@ -13,16 +14,26 @@ function Languages({
       <h3>Languages</h3>
       <div className="flex gap-2 mt-4 flex-wrap">
         {languages.map((lang, index) => (
-          <Input
-            value={lang}
-            key={`lang-${index}`}
-            placeholder="New language"
-            className="px-3 bg-slate-100 rounded-md w-fit"
-            onChange={(e) => {
-              languages[index] = e.target.value;
-              updateLanguages(languages);
-            }}
-          />
+          <div key={`lang-${index}`} className="flex gap-2 hidden-delete">
+            <Input
+              value={lang}
+              placeholder="New language"
+              className="px-3 bg-slate-100 rounded-md w-fit"
+              onChange={(e) => {
+                languages[index] = e.target.value;
+                updateLanguages(languages);
+              }}
+            />
+            <button
+              className="hidden-delete-btn px-2"
+              onClick={() => {
+                languages.splice(index, 1);
+                updateLanguages(languages);
+              }}
+            >
+              <HiOutlineXMark />
+            </button>
+          </div>
         ))}
       </div>
       <AddButton

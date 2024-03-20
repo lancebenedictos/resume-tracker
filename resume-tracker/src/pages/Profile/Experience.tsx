@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { JobExperience } from "@/models/ResumeInfo";
 import { Label } from "@radix-ui/react-label";
 import AddButton from "./common/AddButton";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 function formatDateToYYYYMMDD(date: Date) {
   // Ensure the input is a Date object
@@ -32,23 +33,35 @@ function Experience({
     <div>
       <h3>Experiences</h3>
       {experiences.map((exp, index) => (
-        <div key={index} className="section mt-4">
-          <span>
-            <Label htmlFor="company">Company name</Label>
-            <Input
-              placeholder="Company name"
-              id="company"
-              type="text"
-              value={exp.company}
-              onChange={(e) => {
-                const { value } = e.currentTarget;
-                const exp = experiences[index];
-                exp.company = value;
-                experiences[index] = exp;
+        <div key={index} className="section mt-4 hidden-delete">
+          <div className="flex gap-4  items-center">
+            <span className="flex-grow">
+              <Label htmlFor="company">Company name</Label>
+              <Input
+                placeholder="Company name"
+                id="company"
+                type="text"
+                value={exp.company}
+                onChange={(e) => {
+                  const { value } = e.currentTarget;
+                  const exp = experiences[index];
+                  exp.company = value;
+                  experiences[index] = exp;
+                  updateExperience(experiences);
+                }}
+              />
+            </span>
+
+            <button
+              className="hidden-delete-btn px-2"
+              onClick={() => {
+                experiences.splice(index, 1);
                 updateExperience(experiences);
               }}
-            />
-          </span>
+            >
+              <HiOutlineXMark />
+            </button>
+          </div>
 
           <span>
             <Label htmlFor="title">Title</Label>
@@ -129,16 +142,28 @@ function Experience({
             </button>
           </span>
           {exp.responsibilities.map((resp, idx) => (
-            <Textarea
-              key={`resp-${idx}`}
-              value={resp}
-              onChange={(e) => {
-                const exp = experiences[index];
-                exp.responsibilities[idx] = e.target.value;
-                experiences[index] = exp;
-                updateExperience(experiences);
-              }}
-            />
+            <div className="hidden-btn flex gap-4 items-center">
+              <Textarea
+                key={`resp-${idx}`}
+                value={resp}
+                onChange={(e) => {
+                  const exp = experiences[index];
+                  exp.responsibilities[idx] = e.target.value;
+                  experiences[index] = exp;
+                  updateExperience(experiences);
+                }}
+              />
+
+              <button
+                className="hidden-delete-btn px-2"
+                onClick={() => {
+                  experiences[index].responsibilities.splice(idx, 1);
+                  updateExperience(experiences);
+                }}
+              >
+                <HiOutlineXMark />
+              </button>
+            </div>
           ))}
 
           <hr />

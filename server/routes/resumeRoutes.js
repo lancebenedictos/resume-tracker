@@ -14,38 +14,88 @@ router.get(
   asyncHandler(async (req, res) => {
     const job = await Job.findById(req.params.jobId).populate("user");
     const { user } = req;
-    console.log("here");
 
     if (!user || !job) return res.status(500);
-    const message = `Create an ATS friendly resume. The job description is ${job.job_description}. Job title is ${job.job_title}. Person details are ${user.resume_info}. Choose 3 relevant job experiences. You can build a resume using the details from ${user.resume_info}, IT IS IMPORTANT THAT YOU DO NOT ADD INFORMATION OUTSIDE THE GIVEN INFORMATION. You are allowed to change summary to match job description
-    respond in this schema :
-   {
-    resume_info: { job_experience: [
+    const message = `Develop an ATS-compatible resume tailored for the specified job with the following parameters: Job title is ${job.job_title}, and the job description is ${job.job_description}. Utilize information from ${user.resume_info}, incorporating all job experiences (up to three) while ensuring that job experience details remain unchanged. It is crucial not to include any information beyond the provided dataset. You have the flexibility to adjust the summary and skills to align with the job description.
+
+ structure your response in json:
+{
+  "resume_info": {
+    "job_experience": [
       {
-        title: String,
-        company: String,
-        start_date: String,
-        end_date: String,
-        responsibilities: [String],
-        location: String
-      },
+        "title": "String",
+        "company": "String",
+        "start_date": "String",
+        "end_date": "String",
+        "responsibilities": ["String"],
+        "location": "String"
+      }
     ],
-    skills: [String],
-    education: [
+    "skills": ["String"],
+    "education": [
       {
-        degree: String,
-        institution: String,
-        graduation_year: String,
-      },
+        "degree": "String",
+        "institution": "String",
+        "graduation_year": "String",
+        "info": ["String"]
+      }
     ],
-    summary: String,
-    awards: [{ title: String, year: String, description: String }],
-    certifications: [{ name: String, year: String }],
-    projects: [{ name: String, year: String, details: String }],
-    languages: [String],
+    "summary": "String",
+    "awards": [
+      {
+        "title": "String",
+        "year": "String",
+        "description": "String"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "String",
+        "year": "String"
+      }
+    ],
+    "projects": [
+      {
+        "name": "String",
+        "year": "String",
+        "details": "String"
+      }
+    ],
+    "languages": ["String"]
   }
-   }
-  `;
+}
+
+`;
+    //    `Create an ATS friendly resume. The job description is ${job.job_description}. Job title is ${job.job_title}. Use information from ${user.resume_info} to the job description add all job experience if less that three, job experience max is 3. IT IS IMPORTANT THAT YOU DO NOT ADD INFORMATION OUTSIDE THE GIVEN INFORMATION. You are allowed to change summary to match job description
+    //   respond in this schema :
+    //  {
+    //   resume_info: { job_experience: [
+    //     {
+    //       title: String,
+    //       company: String,
+    //       start_date: String,
+    //       end_date: String,
+    //       responsibilities: [String],
+    //       location: String
+    //     },
+    //   ],
+    //   skills: [String],
+    //   education: [
+    //     {
+    //       degree: String,
+    //       institution: String,
+    //       graduation_year: String,
+    //       info: String[]
+    //     },
+    //   ],
+    //   summary: String,
+    //   awards: [{ title: String, year: String, description: String }],
+    //   certifications: [{ name: String, year: String }],
+    //   projects: [{ name: String, year: String, details: String }],
+    //   languages: [String],
+    // }
+    //  }
+    // `;
 
     const completion = await openai.chat.completions.create({
       messages: [
@@ -64,6 +114,8 @@ router.get(
     const { resume_info } = await JSON.parse(
       completion.choices[0].message.content
     );
+
+    console.log(resume_info);
 
     job.resume_info = resume_info;
 
