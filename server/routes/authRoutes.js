@@ -7,7 +7,9 @@ const asyncHandler = require("../middleware/asyncHandler");
 router.post(
   "/signup",
   asyncHandler(async (req, res) => {
-    const emailCheck = await User.findOne({ email: req.body.email });
+    const emailCheck = await User.findOne({
+      "personal_info.email": req.body.email,
+    });
 
     if (emailCheck)
       return res.status(400).json({ message: "Email already exists" });

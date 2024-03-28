@@ -8,7 +8,14 @@ export const checkUser = async (): Promise<User> => {
   return res.data.user;
 };
 
-export const signUp = async (user: User): Promise<User> => {
+type signUpInfo = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+};
+
+export const signUp = async (user: signUpInfo): Promise<User> => {
   const res = await axios.post(
     `${BASE}/auth/signup`,
     { ...user },
