@@ -25,6 +25,7 @@ export const saveJob = async (job: Job): Promise<Job> => {
     { withCredentials: true }
   );
 
+  console.log(res);
   return res.data.job;
 };
 

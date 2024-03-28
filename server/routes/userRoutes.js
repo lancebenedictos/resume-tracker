@@ -66,6 +66,12 @@ router.post(
   authenticate,
   asyncHandler(async (req, res) => {
     const { user } = req;
+
+    const foundJob = await Job.findOne({ job_id: req.body.job.job_id });
+
+    if (foundJob) {
+      return res.status(409).json({ message: "Job already saved" });
+    }
     const job = await Job.create({
       ...req.body.job,
       user: user._id,

@@ -9,6 +9,7 @@ import ResumeInfo from "@/models/ResumeInfo";
 import { DocumentCreator } from "@/lib/DocumentCreator";
 import { Packer } from "docx";
 import { saveAs } from "file-saver";
+import Loader from "@/components/ui/Loader";
 
 function Resume() {
   const { id } = useParams();
@@ -22,6 +23,8 @@ function Resume() {
     queryKey: ["job", id],
     queryFn: () => getUserJob(id || ""),
   });
+
+  const [loading, setLoading] = useState(false);
 
   const [resume, setResume] = useState<ResumeInfo | undefined>(undefined);
 
@@ -42,19 +45,22 @@ function Resume() {
   const mutation = useMutation({
     mutationFn: createResume,
     onSuccess: (_data) => {
+      setLoading(false);
       queryClient.setQueryData(["job", id], _data);
     },
   });
 
-  if (isLoading || mutation.isPending) return <h1>loading</h1>;
+  if (isLoading || mutation.isPending) return <Loader />;
 
   if (!resume) return <h1>Job not found</h1>;
 
   return (
     <div className=" w-[80%] mx-auto">
+      {loading && <Loader />}
       <div className="flex gap-2">
         <button
           onClick={() => {
+            setLoading(true);
             mutation.mutate(id!);
           }}
         >

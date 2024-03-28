@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/api/auth";
 
-type props = { user: User | undefined; isError: boolean };
-function RightPane({ user, isError }: props) {
+type props = { user: User | undefined; isError: boolean; isVertical?: boolean };
+function RightPane({ user, isError, isVertical }: props) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -14,9 +14,13 @@ function RightPane({ user, isError }: props) {
     },
   });
   return (
-    <div className="flex ml-auto gap-4">
+    <div
+      className={`flex ml-auto gap-4 ${
+        isVertical && "flex-col items-center pt-[50px] gap-2 text-xl font-bold"
+      }`}
+    >
       {!user || isError ? (
-        <span className="flex gap-4">
+        <span className={`flex gap-4 ${isVertical && "flex-col"}`}>
           <Link to="/signup">Signup</Link>
           <Link to="/signin">Login</Link>
         </span>

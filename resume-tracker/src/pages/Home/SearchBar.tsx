@@ -16,7 +16,7 @@ function SearchBar({ searchJobs, radius, setRadius, setQuery }: props) {
   const radiusRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <div className=" w-[80%] mx-auto flex flex-col gap-2">
+    <div className=" md:w-[80%] mx-auto flex flex-col gap-2">
       <div>
         <Label htmlFor="position">Position</Label>
         <Input

@@ -66,36 +66,6 @@ router.get(
 }
 
 `;
-    //    `Create an ATS friendly resume. The job description is ${job.job_description}. Job title is ${job.job_title}. Use information from ${user.resume_info} to the job description add all job experience if less that three, job experience max is 3. IT IS IMPORTANT THAT YOU DO NOT ADD INFORMATION OUTSIDE THE GIVEN INFORMATION. You are allowed to change summary to match job description
-    //   respond in this schema :
-    //  {
-    //   resume_info: { job_experience: [
-    //     {
-    //       title: String,
-    //       company: String,
-    //       start_date: String,
-    //       end_date: String,
-    //       responsibilities: [String],
-    //       location: String
-    //     },
-    //   ],
-    //   skills: [String],
-    //   education: [
-    //     {
-    //       degree: String,
-    //       institution: String,
-    //       graduation_year: String,
-    //       info: String[]
-    //     },
-    //   ],
-    //   summary: String,
-    //   awards: [{ title: String, year: String, description: String }],
-    //   certifications: [{ name: String, year: String }],
-    //   projects: [{ name: String, year: String, details: String }],
-    //   languages: [String],
-    // }
-    //  }
-    // `;
 
     const completion = await openai.chat.completions.create({
       messages: [

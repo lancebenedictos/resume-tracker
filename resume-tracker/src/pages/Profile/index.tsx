@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { updateUser } from "@/api/user";
 import ResumeForm from "./ResumeForm";
 import ProfileForm from "./ProfileForm";
-
+import Loader from "@/components/ui/Loader";
 import ResumeInfo, { PersonalInfo } from "@/models/ResumeInfo";
 
 function Index() {
@@ -30,12 +30,12 @@ function Index() {
 
   // if (!state) return;
   if (isError) return <p>Error</p>;
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) return <Loader />;
 
   // have all data
   return (
-    <div className="  pt-4">
-      <div className="w-[80%] flex justify-between  mx-auto items-center">
+    <div className="w-[90%] md:w-[80%] mx-auto py-4">
+      <div className=" flex justify-between   items-center">
         <p className=" font-bold text-xl">Profile</p>
         <Button
           onClick={() => {
@@ -47,7 +47,7 @@ function Index() {
         </Button>
       </div>
 
-      <main className="mx-auto w-[80%] profile">
+      <main className="mx-auto profile">
         {personal_info && (
           <ProfileForm state={personal_info} setState={setPersonalInfo} />
         )}

@@ -22,8 +22,9 @@ function JobCard({ job }: props) {
     onSuccess: (job, _, context: Job[]) => {
       // Invalidate and refetch
       // queryClient.invalidateQueries({ queryKey: ["organizer"] });
-      queryClient.setQueryData(["jobs"], [...context, job]);
       alert("saved");
+
+      queryClient.setQueryData(["jobs"], [...context, job]);
     },
   });
   const date = job.job_offer_expiration_datetime_utc

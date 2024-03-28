@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import JobCard from "./JobCard";
-
+import Loader from "@/components/ui/Loader";
 function MyJobs() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -25,10 +25,10 @@ function MyJobs() {
     },
   });
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) return <Loader />;
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div className="sm:w-[90%] md:w-[80%] mx-auto">
       {jobs && jobs.length > 0 ? (
         <InfiniteScroll
           dataLength={jobs!.length}
